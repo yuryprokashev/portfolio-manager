@@ -16,8 +16,8 @@ Each Capability is based on a set of Requirements.
 
 ## Problems
 In this setup there are a lot of problems. To name a few:
-1. I need to include the dropdown list of all Companies that The Holding
-owns into the Request Form of my Application. Where do I get this list?
+1. I need to include the list of all Companies that The Holding
+owns into the Form of my Application. Where do I get this list?
 2. I need to validate the names of the Products that The Holding owns,
 in the Request Form of my Application. Where do I get the correct names?
 3. I want to get the list of the Features that are ordered
