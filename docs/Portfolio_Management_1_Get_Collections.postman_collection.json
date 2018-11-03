@@ -1,0 +1,776 @@
+{
+	"info": {
+		"_postman_id": "34073d51-2f38-4d26-9da3-242b4adf060d",
+		"name": "Portfolio Management 1. Get Collections",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ReadCollection200",
+			"item": [
+				{
+					"name": "Companies",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "579d0f12-7d0a-4507-a918-362ac0410f14",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "3e7faad3-7e84-41fe-bedf-995a8f80bf1c",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Body contains 'Aurea', 'DevFactory', 'Ignite'\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Aurea\");",
+									"    pm.expect(pm.response.text()).to.include(\"DevFactory\");",
+									"    pm.expect(pm.response.text()).to.include(\"Ignite\");",
+									"});",
+									"",
+									"pm.test(\"Sorted by Name, Ascending, when sort is not specified in query string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.collection[0].name).to.eql(\"Aurea\");",
+									"    pm.expect(jsonData.collection[1].name).to.eql(\"DevFactory\");",
+									"    pm.expect(jsonData.collection[2].name).to.eql(\"Ignite\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/companies",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"companies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CompaniesSortNameDesc",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "579d0f12-7d0a-4507-a918-362ac0410f14",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "03209579-5805-4996-a5be-1e55167ef8da",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Body contains 'Aurea', 'DevFactory', 'Ignite'\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Aurea\");",
+									"    pm.expect(pm.response.text()).to.include(\"DevFactory\");",
+									"    pm.expect(pm.response.text()).to.include(\"Ignite\");",
+									"});",
+									"",
+									"",
+									"",
+									"pm.test(\"Sorted by Name, Descending\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.collection[2].name).to.eql(\"Aurea\");",
+									"    pm.expect(jsonData.collection[1].name).to.eql(\"DevFactory\");",
+									"    pm.expect(jsonData.collection[0].name).to.eql(\"Ignite\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/companies?sort_by=name&sort_order=desc",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"companies"
+							],
+							"query": [
+								{
+									"key": "sort_by",
+									"value": "name"
+								},
+								{
+									"key": "sort_order",
+									"value": "desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CompaniesFilterByName",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "28bfd969-6b8c-4fd9-b65a-a9d8a7380914",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Filter by 'aurea' must return 1 item in collection\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.collection.length).to.eql(1);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/companies?name=aurea",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"companies"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "aurea"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ae769b4d-ebb4-4ca5-9132-71d0ee2149fc",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Collection must have 6 items\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.collection.length).to.eql(6);",
+									"});",
+									"",
+									"pm.test(\"Sorted by Name, Ascending, when sort is not specified in query string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.collection[0].name).to.eql(\"Api Manager\");",
+									"    pm.expect(jsonData.collection[1].name).to.eql(\"CX Messenger\");",
+									"    pm.expect(jsonData.collection[2].name).to.eql(\"CX Monitor\");",
+									"    pm.expect(jsonData.collection[3].name).to.eql(\"CX Process\");",
+									"    pm.expect(jsonData.collection[4].name).to.eql(\"DevSpaces\");",
+									"    pm.expect(jsonData.collection[5].name).to.eql(\"NuView Payroll\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/products",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ProductsSortByNameDesc",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "73aba8a3-1c9d-4af0-9737-64a7ca0209ff",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Collection must have 6 items\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.collection.length).to.eql(6);",
+									"});",
+									"",
+									"pm.test(\"Sorted by Name, Descending\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.collection[5].name).to.eql(\"Api Manager\");",
+									"    pm.expect(jsonData.collection[4].name).to.eql(\"CX Messenger\");",
+									"    pm.expect(jsonData.collection[3].name).to.eql(\"CX Monitor\");",
+									"    pm.expect(jsonData.collection[2].name).to.eql(\"CX Process\");",
+									"    pm.expect(jsonData.collection[1].name).to.eql(\"DevSpaces\");",
+									"    pm.expect(jsonData.collection[0].name).to.eql(\"NuView Payroll\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/products?sort_by=name&sort_order=desc",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "sort_by",
+									"value": "name"
+								},
+								{
+									"key": "sort_order",
+									"value": "desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ProductsFilterByName",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f69586cb-751d-49fd-9928-0c75db623be1",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Filter by 'devspace' must return 1 item in collection\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.collection.length).to.eql(1);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/products?name=devspace",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "devspace"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ProductsFilterByParentId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ef7ab1b1-cec8-465b-b3eb-599a7d92993f",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Filter by parent_id field\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.collection.length).to.eql(4);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/products?parent_id=5753b59f-05e4-42d0-a162-8870f338afde",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "parent_id",
+									"value": "5753b59f-05e4-42d0-a162-8870f338afde"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ProductsFilterByParentIdSortByNameDesc",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e9e4b05c-6580-4db1-8bb7-ccac76709617",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Filter by parent_id field\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.collection.length).to.eql(4);",
+									"});",
+									"",
+									"pm.test(\"Sorted by Name, Descending\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.collection[3].name).to.eql(\"Api Manager\");",
+									"    pm.expect(jsonData.collection[2].name).to.eql(\"CX Messenger\");",
+									"    pm.expect(jsonData.collection[1].name).to.eql(\"CX Monitor\");",
+									"    pm.expect(jsonData.collection[0].name).to.eql(\"CX Process\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/products?parent_id=5753b59f-05e4-42d0-a162-8870f338afde&sort_by=name&sort_order=desc",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "parent_id",
+									"value": "5753b59f-05e4-42d0-a162-8870f338afde"
+								},
+								{
+									"key": "sort_by",
+									"value": "name"
+								},
+								{
+									"key": "sort_order",
+									"value": "desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Features",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3224024f-9574-4387-998f-8ab8e1e8ee61",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Collection must have 2 items\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.collection.length).to.eql(2);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/features",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"features"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FeaturesFilterByName",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "25e38afa-ed94-4be9-b052-ef67c5384fa4",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Filter by 'api' must return 1 item\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.collection.length).to.eql(1);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/features?name=api",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"features"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "api"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FeaturesFilterByParentId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b95a3d84-e583-45e8-aff9-9669da0668fd",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Filter by parent_id must return 1 item\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.collection.length).to.eql(1);",
+									"});",
+									"",
+									"pm.test(\"when parent_id maps to DevSpaces product, then 'Server-side Plugins' is returned\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.collection[0].name).to.eql(\"Server-side Plugins\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/features?parent_id=5411d7bf-9b48-4d6a-a8b0-9c6002d73310",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"features"
+							],
+							"query": [
+								{
+									"key": "parent_id",
+									"value": "5411d7bf-9b48-4d6a-a8b0-9c6002d73310"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Capabilities",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8fb748d1-7e23-4a82-86a6-a894826c3348",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/capabilities",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"capabilities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Requirements",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "faa19b13-e6a3-4da2-97a4-6a7b37d2fdb7",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/requirements",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"requirements"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Releases",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1e8f2a62-e457-4cb1-b4e2-32a933b9d4f5",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/releases",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"releases"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Milestones",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5172b089-6db7-4c69-8da0-9470ede6a3b6",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/milestones",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"milestones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TemplatesRequirement",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "94c20c76-583d-42fa-989d-cdf538b1b876",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/templates/requirement",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"templates",
+								"requirement"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TemplatesCapability",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "680121ba-ed6f-4530-8465-5825b718a31e",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/templates/capability",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"templates",
+								"capability"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f178b902-ab71-4918-a2f9-72413e457432",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "83934b3c-ef41-4652-bcad-ce1da07526c7",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "e9d24c81-2987-4768-8c76-bdb89c1f5d85",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "9efcc1aa-b8d7-4eaf-ae49-4e556582358c",
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Response time is less than 200ms\", function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(200);",
+					"});"
+				]
+			}
+		}
+	]
+}

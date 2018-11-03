@@ -11,7 +11,7 @@
         
         <!--<property name="connection.driver_class">org.h2.Driver</property>-->
         <!---->
-        <!--<property name="connection.url">jdbc:h2:mem:capabilityconstructor</property>-->
+        <!--<property name="connection.url">jdbc:h2:mem:portfoliomanager</property>-->
         <!---->
         <!--<property name="connection.username">sa</property>-->
 
